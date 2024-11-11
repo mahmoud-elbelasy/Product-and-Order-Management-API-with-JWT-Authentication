@@ -1,70 +1,78 @@
-<<<<<<< HEAD
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Product & Order Management API 📦🛒
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+An API designed for managing products and orders with comprehensive CRUD functionality. This API supports authentication, pagination, sorting, and search capabilities, making it an ideal foundation for e-commerce applications or inventory management systems.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Product Management**: Create, read, update, delete products
+- **Order Management**: Create, read, and delete orders, with automated total price calculation
+- **User Authentication**: JWT-based authentication to protect endpoints
+- **Search & Filtering**: Search products by name and filter by price range
+- **Pagination & Sorting**: Easily paginate and sort lists of products and orders
+- **Automated Calculations**: Event-driven calculation for order totals based on product prices
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Models and Database Structure 🗃️
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Product Model
 
-## Learning Laravel
+| Field      | Type    | Description                  |
+|------------|---------|------------------------------|
+| `id`       | Integer | Primary Key                  |
+| `name`     | String  | Product name (required)      |
+| `price`    | Decimal | Product price (required)     |
+| `quantity` | Integer | Available quantity (required)|
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Order Model
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+| Field         | Type       | Description                                                  |
+|---------------|------------|--------------------------------------------------------------|
+| `id`          | Integer    | Primary Key                                                  |
+| `product_id`  | Integer    | Foreign Key referencing Products                             |
+| `quantity`    | Integer    | Quantity of product ordered (required)                       |
+| `total_price` | Decimal    | Calculated as `product price * quantity`                     |
+| `created_at`  | Timestamp  | Timestamp of order creation                                  |
+| `updated_at`  | Timestamp  | Timestamp of last update to order                            |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## API Endpoints 🛠️
 
-## Laravel Sponsors
+### Product Endpoints
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **GET /api/products**: List all products with optional sorting and pagination
+- **POST /api/products**: Create a new product
+- **GET /api/products/{id}**: Retrieve details of a specific product
+- **PUT /api/products/{id}**: Update details of a specific product
+- **DELETE /api/products/{id}**: Delete a specific product
 
-### Premium Partners
+### Order Endpoints
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **GET /api/orders**: List all orders with optional sorting and pagination
+- **POST /api/orders**: Create a new order (total price auto-calculated)
+- **GET /api/orders/{id}**: Retrieve details of a specific order
+- **DELETE /api/orders/{id}**: Delete a specific order
 
-## Contributing
+> **Note:** `total_price` in orders is automatically calculated as `product price * ordered quantity`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Additional Requirements 🎯
 
-## Code of Conduct
+### Search & Filter Products
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Search by Name**: Query products by name
+- **Filter by Price Range**: Specify minimum and maximum price to filter products
 
-## Security Vulnerabilities
+### Pagination 📄
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Pagination for product and order lists (default: 10 items per page)
+- Optional sorting (e.g., by price, date added)
 
-## License
+### Authentication 🔒
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-=======
-# Product-and-Order-Management-API-with-JWT-Authentication
->>>>>>> 91f4825fa587107dc550559f459d08992c214d5e
+- **JWT-based Authentication**: Required for all product and order endpoints
+- **User Registration**: Register new users
+- **Login**: Authenticate users and issue JWT tokens for access
+
+## Installation & Setup ⚙️
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/product-order-api.git
+   cd product-order-api
